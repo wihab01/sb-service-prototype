@@ -21,6 +21,7 @@ public class Product {
     @ApiModelProperty(notes = "The image URL of the product")
     private String imageUrl;
     @ApiModelProperty(notes = "The price of the product", required = true)
+    @Column(nullable=false)
     private BigDecimal price;
 
     public String getDescription() {

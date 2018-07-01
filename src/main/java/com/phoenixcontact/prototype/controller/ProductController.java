@@ -14,7 +14,7 @@ import com.phoenixcontact.prototype.domain.Product;
 import com.phoenixcontact.prototype.service.ProductService;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 @Api(value="onlinestore", description="Operations pertaining to products in Online Store")
 public class ProductController {
 

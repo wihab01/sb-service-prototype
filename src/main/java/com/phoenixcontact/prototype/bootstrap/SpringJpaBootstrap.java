@@ -1,7 +1,9 @@
 package com.phoenixcontact.prototype.bootstrap;
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -9,9 +11,6 @@ import org.springframework.stereotype.Component;
 
 import com.phoenixcontact.prototype.domain.Product;
 import com.phoenixcontact.prototype.repository.ProductRepository;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 @Component
 public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedEvent> {
@@ -32,6 +31,11 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
     }
 
     private void loadProducts() {
+    	long cnt = productRepository.count();
+    	if (cnt > 0) {
+    		return;
+    	}
+    	
         Product shirt = new Product();
         shirt.setDescription("Spring Framework Guru Shirt");
         shirt.setPrice(new BigDecimal("18.95"));
@@ -52,7 +56,7 @@ public class SpringJpaBootstrap implements ApplicationListener<ContextRefreshedE
     }
 
 
-    }
+}
 
 
 
