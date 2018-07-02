@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,7 @@ public class AppController {
     @ApiOperation(value = "Add an app")
     @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
     public App saveApp(@Valid @RequestBody App app){
+    	app.setLastUpdated(new Date());
         App newApp = appService.saveApp(app);
         return newApp;
         //return new ResponseEntity("App saved successfully", HttpStatus.OK);
@@ -61,7 +64,7 @@ public class AppController {
 
     @ApiOperation(value = "Update an app")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity updateApp(@PathVariable Long id, @RequestBody App app){
+    public ResponseEntity updateApp(@PathVariable Long id, @Valid @RequestBody App app){
         App storedApp = appService.getAppById(id);
     	if (storedApp == null) {
     		return new ResponseEntity<String>("App with id=" + id + " not found", HttpStatus.NOT_FOUND);
@@ -71,6 +74,7 @@ public class AppController {
 	        storedApp.setPrice(app.getPrice());
 	        storedApp.setActive(app.isActive());
 	        storedApp.setVersion(app.getVersion());
+	    	storedApp.setLastUpdated(new Date());
 	        appService.saveApp(storedApp);
         }
         return new ResponseEntity<App>(storedApp, HttpStatus.OK);

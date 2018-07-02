@@ -1,6 +1,7 @@
 package com.phoenixcontact.prototype.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -41,6 +44,10 @@ public class App {
     @Column(nullable=false, length=20)
     @NotBlank
     private String version;
+    @ApiModelProperty(notes = "Last update")
+    //@Column(nullable=false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ") 
+    private Date lastUpdated;
 
     public String getDescription() {
         return description;
@@ -96,5 +103,13 @@ public class App {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 }
