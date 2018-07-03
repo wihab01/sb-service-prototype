@@ -8,11 +8,13 @@ phases:
   pre_build:
     commands:
       - echo Test started on `date`
-      - mvn clean compile test
+      #- mvn clean compile test
+      - mvn clean compile
   build:
     commands:
       - echo Build started on `date`
-      - mvn package
+      #- mvn package
+      - mvn package -Dmaven.test.skip=true
   post_build:
     commands:
       - echo Entering post_build phase...

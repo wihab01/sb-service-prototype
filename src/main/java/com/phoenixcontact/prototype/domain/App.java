@@ -39,7 +39,7 @@ public class App {
     private BigDecimal price;
     @ApiModelProperty(notes = "Application released")
     @Column(nullable=false)
-    private boolean active = false;
+    private Boolean active = false;
     @ApiModelProperty(notes = "Application version")
     @Column(nullable=false, length=20)
     @NotBlank
