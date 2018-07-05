@@ -7,10 +7,10 @@ wget https://s3.amazonaws.com/dhqs-mirror-iad/apache-tomcat-8.0.39.tar.gz
 mkdir /opt/tomcat
 tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
 cd /opt/tomcat
-#sed -i 's|port="8080"|port="80"|g' conf/server.xml
+sed -i 's|port="8080"|port="80"|g' conf/server.xml
 #begin remove stuff from previous used CodePipeline (commands should be removed after running once!)
 #rm -rf webapps/ROOT
 #rm -rf webapps/ROOT.war
 #end
-rm -rf webapps/spring-boot-service
-mv /home/ec2-user/javaapp/spring-boot-service.war webapps/
+rm -rf webapps/appstore-service
+mv /home/ec2-user/javaapp/appstore-service.war webapps/

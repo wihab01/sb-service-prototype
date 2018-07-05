@@ -1,8 +1,8 @@
 version: 0.0
 os: linux
 files:
-  - source: target/spring-boot-service.war
-    destination: /home/ec2-user/javaapp
+  - source: target/appstore-service.war.original
+    destination: /home/ec2-user/javaapp/appstore-service.war
 hooks:
   AfterInstall:
     - location: scripts/install_dependencies

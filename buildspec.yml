@@ -25,4 +25,4 @@ artifacts:
     - 'appspec.yml'
     - 'scripts/start_server'
     - 'scripts/install_dependencies'
-    - 'target/spring-boot-service.war'
+    - 'target/appstore-service.war.original'
