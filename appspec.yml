@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: target/appstore-service.war.original
-    destination: /home/ec2-user/javaapp/appstore-service.war
+    destination: /home/ec2-user/javaapp
 hooks:
   AfterInstall:
     - location: scripts/install_dependencies
