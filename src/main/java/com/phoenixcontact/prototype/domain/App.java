@@ -1,20 +1,22 @@
 package com.phoenixcontact.prototype.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 public class App {
@@ -35,29 +37,42 @@ public class App {
     @Column(length=255)
     private String iconUrl;
     @ApiModelProperty(notes = "The price of the application", required = true)
+    @NotNull
     @PositiveOrZero
     private BigDecimal price;
     @ApiModelProperty(notes = "Application released")
     @Column(nullable=false)
-    private Boolean active = false;
+    private boolean active = false;
     @ApiModelProperty(notes = "Application version")
     @Column(nullable=false, length=20)
     @NotBlank
     private String version;
-    @ApiModelProperty(notes = "Last update")
-    //@Column(nullable=false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss.SSSZ") 
-    private Date lastUpdated;
-
+    @ApiModelProperty(notes = "Calculated median rating")
+    private Double rating;
+    @ApiModelProperty(notes = "Developer of the app", required = true)
+    @ManyToOne(fetch=FetchType.LAZY)
+    //@NotNull
+    @JoinColumn(name="user_uuid")
+    private User user;
+    
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+	public void setDescription(String description) {
         this.description = description;
     }
 
-    public Long getId() {
+
+	public Double getRating() {
+		return rating;
+	}
+
+	protected void setRating(Double rating) {
+		this.rating = rating;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -103,13 +118,5 @@ public class App {
 
 	public void setVersion(String version) {
 		this.version = version;
-	}
-
-	public Date getLastUpdated() {
-		return lastUpdated;
-	}
-
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
 	}
 }

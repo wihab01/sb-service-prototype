@@ -1,22 +1,24 @@
 package com.phoenixcontact.prototype.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
-import java.util.Date;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenixcontact.prototype.domain.App;
 import com.phoenixcontact.prototype.service.AppService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/apps")
@@ -38,11 +40,11 @@ public class AppController {
 //            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
 //    }
 //    )
-//    @RequestMapping(method= RequestMethod.GET, produces = "application/json")
-//    public Iterable<App> list(Model model){
-//        Iterable<App> appList = appService.listAllApps();
-//        return appList;
-//    }
+/*   @RequestMapping(method= RequestMethod.GET, produces = "application/json")
+    public Iterable<App> list(Model model){
+        Iterable<App> appList = appService.listAllApps();
+        return appList;
+    }*/
 
     @ApiOperation(value = "Search an app by ID",response = App.class)
     @RequestMapping(value = "/{id}", method= RequestMethod.GET, produces = "application/json")
@@ -58,16 +60,8 @@ public class AppController {
     @RequestMapping(method= RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public Iterable<App> searchApp(@RequestParam(value = "name", required = false) String name, 
-    		@RequestParam(value = "rating", required = false) Integer rating) {
-    	Iterable<App> appList = appService.listAllApps();
-        return appList;
-    }
-    
-    @ApiOperation(value = "Search a list of apps by list name", response = App.class)
-    @RequestMapping(value = "/list/{listName}", method= RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public Iterable<App> searchApp(@PathVariable String listName) {
-    	Iterable<App> appList = appService.listAllApps();
+    		@RequestParam(value = "rating", required = false) Integer rating) { 
+    	Iterable<App> appList = appService.findApps(name, rating);
         return appList;
     }
     
@@ -106,7 +100,21 @@ public class AppController {
     	}
         appService.deleteApp(id);
         return new ResponseEntity<String>("App deleted successfully", HttpStatus.OK);
-
     }
 
+    @ApiOperation(value = "Search a list by list name")
+    @RequestMapping(value = "/list/{listName}", method= RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public Iterable<App> searchAppByList(@PathVariable String listName) {
+    	Iterable<App> appList = null;
+    	switch(listName) {
+    	case "PromotedApps":
+    		appList = appService.findAllApps();
+    		break;
+    	}
+        return appList;
+    }
+    
+    
+    
 }

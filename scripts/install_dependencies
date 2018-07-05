@@ -3,6 +3,7 @@
 ##install on EC2 instance in AWS
 ##
 cd /home/ec2-user/javaapp
+mv appstore-service.war.original appstore-service.war
 # deactivate regular tomcat (re)installation
 #wget https://s3.amazonaws.com/dhqs-mirror-iad/apache-tomcat-8.0.39.tar.gz
 #mkdir /opt/tomcat
@@ -10,5 +11,5 @@ cd /home/ec2-user/javaapp
 cd /opt/tomcat
 #sed -i 's|port="8080"|port="80"|g' conf/server.xml
 rm -rf webapps/appstore-service
-#mv /home/ec2-user/javaapp/appstore-service.war.original webapps/appstore-service.war
-cp /home/ec2-user/javaapp/appstore-service.war.original webapps/appstore-service.war
+#mv /home/ec2-user/javaapp/appstore-service.war.original webapps
+cp /home/ec2-user/javaapp/appstore-service.war webapps
