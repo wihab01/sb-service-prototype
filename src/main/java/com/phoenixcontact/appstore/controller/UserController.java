@@ -32,20 +32,6 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @ApiOperation(value = "View a list of available apps",response = Iterable.class)
-//    @ApiResponses(value = {
-//            @ApiResponse(code = 200, message = "Successfully retrieved list"),
-//            @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
-//            @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
-//            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
-//    }
-//    )
-/*   @RequestMapping(method= RequestMethod.GET, produces = "application/json")
-    public Iterable<App> list(Model model){
-        Iterable<App> appList = appService.listAllApps();
-        return appList;
-    }*/
-
     @ApiOperation(value = "Search an user by UUID",response = User.class)
     @RequestMapping(value = "/{uuid}", method= RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> showUser(@PathVariable String uuid, Model model){
@@ -56,14 +42,11 @@ public class UserController {
         return new ResponseEntity<User>(storedUser, HttpStatus.OK);
     }
 
-  
-    
     @ApiOperation(value = "Add an user")
     @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
     public User saveUser(@Valid @RequestBody User user){
         User newUser = userService.saveUser(user);
         return newUser;
-      
     }
 
     @ApiOperation(value = "Update an user")
@@ -109,8 +92,8 @@ public class UserController {
     )
     @RequestMapping(value = "", method= RequestMethod.GET, produces = "application/json")
     public Iterable<User> list(Model model){
-        Iterable<User> userList = userService.listAllUsers();
-        return userList;
+        Iterable<User> list = userService.listAllUsers();
+        return list;
     }
  
 }
