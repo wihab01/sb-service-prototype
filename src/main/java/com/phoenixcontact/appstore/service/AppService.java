@@ -1,9 +1,9 @@
-package com.phoenixcontact.prototype.service;
+package com.phoenixcontact.appstore.service;
 
 
 import java.util.List;
 
-import com.phoenixcontact.prototype.domain.App;
+import com.phoenixcontact.appstore.domain.App;
 
 public interface AppService {
     App getAppById(Long id);

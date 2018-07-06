@@ -1,4 +1,4 @@
-package com.phoenixcontact.prototype.controller;
+package com.phoenixcontact.appstore.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

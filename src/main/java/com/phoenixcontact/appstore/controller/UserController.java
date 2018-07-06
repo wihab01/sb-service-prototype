@@ -1,4 +1,4 @@
-package com.phoenixcontact.prototype.controller;
+package com.phoenixcontact.appstore.controller;
 
 import javax.validation.Valid;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.phoenixcontact.prototype.domain.User;
-import com.phoenixcontact.prototype.service.UserService;
+import com.phoenixcontact.appstore.domain.User;
+import com.phoenixcontact.appstore.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

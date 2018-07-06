@@ -1,4 +1,4 @@
-package com.phoenixcontact.prototype.config;
+package com.phoenixcontact.appstore.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.phoenixcontact.prototype.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.phoenixcontact.appstore.controller"))
                 //.paths(regex("/product.*"))
                 .paths(regex("/api.*"))
                 .build()

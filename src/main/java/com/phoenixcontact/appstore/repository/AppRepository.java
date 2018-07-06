@@ -1,4 +1,4 @@
-package com.phoenixcontact.prototype.repository;
+package com.phoenixcontact.appstore.repository;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.phoenixcontact.prototype.domain.App;
+import com.phoenixcontact.appstore.domain.App;
 
 @RepositoryRestResource
 public interface AppRepository extends CrudRepository<App, Long>{

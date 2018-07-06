@@ -1,9 +1,9 @@
-package com.phoenixcontact.prototype.service;
+package com.phoenixcontact.appstore.service;
 
 import java.util.List;
 
-import com.phoenixcontact.prototype.domain.App;
-import com.phoenixcontact.prototype.domain.User;
+import com.phoenixcontact.appstore.domain.App;
+import com.phoenixcontact.appstore.domain.User;
 
 public interface UserService {
 	

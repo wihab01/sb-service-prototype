@@ -1,4 +1,4 @@
-package com.phoenixcontact.prototype.domain;
+package com.phoenixcontact.appstore.domain;
 
 import java.util.Date;
 

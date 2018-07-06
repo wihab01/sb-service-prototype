@@ -1,4 +1,4 @@
-package com.phoenixcontact.prototype.service;
+package com.phoenixcontact.appstore.service;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.phoenixcontact.prototype.domain.App;
-import com.phoenixcontact.prototype.repository.AppRepository;
+import com.phoenixcontact.appstore.domain.App;
+import com.phoenixcontact.appstore.repository.AppRepository;
 
 @Service
 public class AppServiceImpl implements AppService {
@@ -113,7 +113,7 @@ public class AppServiceImpl implements AppService {
 		String selectAppStr = "a.id, a.name, a.description, a.price, a.version, a.icon_url, a.active, a.user_uuid"; 
 		String selectRatingStr = "avg(r.rating_value) as rating"; 
 		String fromStr = "app a"; 
-		String joinStr = " join rating r on r.app_id = a.id"; 
+		String joinStr = " left outer join rating r on r.app_id = a.id"; 
 		String joinTextStr = " join _user u on u.uuid = a.user_uuid"; 
 		String whereStr = "";
 		String whereIdStr = "a.id = :id";

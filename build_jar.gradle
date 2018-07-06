@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'com.phoenixcontact.prototype'
+group = 'com.phoenixcontact.appstore'
 version = '0.0.1-SNAPSHOT'
 
 description = "Spring Boot Web Application providing REST services"
@@ -24,7 +24,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 springBoot {
-    mainClassName = "com.phoenixcontact.prototype.Application"
+    mainClassName = "com.phoenixcontact.appstore.Application"
 }
 
 tasks.withType(JavaCompile) {
