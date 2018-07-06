@@ -1,6 +1,7 @@
 package com.phoenixcontact.appstore.domain;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -33,9 +36,16 @@ public class App {
     @ApiModelProperty(notes = "The application description")
     @Column(length=1000)
     private String description;
+    @ApiModelProperty(notes = "News for the latest version of an app")
+    @Column(length=400)
+    private String whatsNew;
     @ApiModelProperty(notes = "The icon URL of the application")
     @Column(length=255)
     private String iconUrl;
+    @ApiModelProperty(notes = "Number of downloads of the application", required = true)
+    @NotNull
+    @PositiveOrZero
+    private Integer downloads;
     @ApiModelProperty(notes = "The price of the application", required = true)
     @NotNull
     @PositiveOrZero
@@ -47,6 +57,10 @@ public class App {
     @Column(nullable=false, length=20)
     @NotBlank
     private String version;
+    @ApiModelProperty(notes = "Last update date")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
+	@NotNull
+	private Date lastUpdate;
     @ApiModelProperty(notes = "Calculated median rating")
     private Double rating;
     @ApiModelProperty(notes = "Developer of the app", required = true)
@@ -118,5 +132,29 @@ public class App {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public String getWhatsNew() {
+		return whatsNew;
+	}
+
+	public void setWhatsNew(String whatsNew) {
+		this.whatsNew = whatsNew;
+	}
+
+	public Integer getDownloads() {
+		return downloads;
+	}
+
+	public void setDownloads(Integer downloads) {
+		this.downloads = downloads;
+	}
+
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 }

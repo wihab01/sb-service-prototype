@@ -52,7 +52,7 @@ public class AppServiceImpl implements AppService {
     	App app = null;
         logger.debug("getAppById called");
 		List<App> apps = findAppsByCriteria(id, null, null);
-		if (apps != null) {
+		if (apps != null && !apps.isEmpty()) {
 			app = apps.get(0);
 		}
         return app;
@@ -110,15 +110,15 @@ public class AppServiceImpl implements AppService {
      */
 	private List<App> findAppsByCriteria(Long id, String text, Integer minRating) {
 		String searchStr = text != null ? "%"+ text.toLowerCase() + "%" : null;
-		String selectAppStr = "a.id, a.name, a.description, a.price, a.version, a.icon_url, a.active, a.user_uuid"; 
+		String selectAppStr = "a.id, a.name, a.description, a.whats_new, a.price, a.version, a.downloads, a.last_update, a.icon_url, a.active, a.user_uuid"; 
 		String selectRatingStr = "avg(r.rating_value) as rating"; 
 		String fromStr = "app a"; 
 		String joinStr = " left outer join rating r on r.app_id = a.id"; 
 		String joinTextStr = " join _user u on u.uuid = a.user_uuid"; 
 		String whereStr = "";
 		String whereIdStr = "a.id = :id";
-		String whereTextStr = "(lower(a.name) like :searchStr or lower(a.description) like :searchStr or u.user_name like :searchStr) ";
-		String havingStr = "having avg(r.rating_value) >= :minRating";
+		String whereTextStr = "(lower(a.name) like :searchStr or lower(a.description) like :searchStr or lower(a.whats_new) like :searchStr or u.user_name like :searchStr) ";
+		String havingStr = "avg(r.rating_value) >= :minRating";
 		if (id != null) {
 			whereStr += (whereStr.length() > 0) ? " and " + whereIdStr : " where " + whereIdStr;
 		}
@@ -146,6 +146,12 @@ public class AppServiceImpl implements AppService {
 
 		@SuppressWarnings("unchecked")
 		List<App> results = sqlQuery.getResultList();
+//		List<App> results = null;
+//		try {
+//			results = sqlQuery.getResultList();
+//		} catch (Exception ex) {
+//			logger.warn("Exception when calling getResultList()", ex);
+//		}
         //TODO rating field not filled because of @Transient in entity class
 		return results;
 	}

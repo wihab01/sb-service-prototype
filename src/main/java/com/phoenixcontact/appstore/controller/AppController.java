@@ -92,7 +92,7 @@ public class AppController {
         return new ResponseEntity<App>(storedApp, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete a app")
+    @ApiOperation(value = "Delete an app")
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<String> delete(@PathVariable Long id){
     	if (!appService.existsAppById(id)) {
