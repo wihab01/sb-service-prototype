@@ -260,16 +260,6 @@ create table appstore.user_role_assignment(
 --
 grant all on schema appstore to postgres;
 grant select, insert, update, delete on all tables in schema appstore to appstore;
+grant usage, select on all sequences in schema appstore to appstore;
 
---TODO: Check for correct handling of sequences (postgres = full access; appstore = minimal grants)
-alter sequence appstore.app_attachment_id_seq owned by appstore.app_attachment.id;
-alter sequence appstore.app_id_seq owned by appstore.app.id;
-alter sequence appstore.app_license_id_seq owned by appstore.app_license.id;
-alter sequence appstore.billing_address_id_seq owned by appstore.billing_address.id;
-alter sequence appstore.order_id_seq owned by appstore._order.id;
-alter sequence appstore.qa_conversation_id_seq owned by appstore.qa_conversation.id;
-alter sequence appstore.question_answer_id_seq owned by appstore.question_answer.id;
-alter sequence appstore.rating_id_seq owned by appstore.rating.id;
-alter sequence appstore.role_id_seq owned by appstore.role.id;
-alter sequence appstore.technical_detail_id_seq owned by appstore.technical_detail.id;
-alter sequence appstore.user_principal_id_seq owned by appstore.user_principal.id;
+--TODO: Check how to access schema 'appstore' when login as user 'appstore'

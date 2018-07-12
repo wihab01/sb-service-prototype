@@ -60,7 +60,7 @@ public class App implements Serializable {
 	@NotNull
 	@PositiveOrZero
 	@ApiModelProperty(notes = "The price of the application", required = true)
-	private BigDecimal price;
+	private Double price;
 
 	@Column(nullable = false)
 	@ApiModelProperty(notes = "Is application released")
@@ -143,11 +143,11 @@ public class App implements Serializable {
 		this.downloads = downloads;
 	}
 
-	public BigDecimal getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

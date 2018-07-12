@@ -8,9 +8,12 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.phoenixcontact.appstore.domain.App;
+import com.phoenixcontact.appstore.dto.AppRowMapper;
 import com.phoenixcontact.appstore.repository.AppRepository;
 
 @Service
@@ -21,6 +24,9 @@ public class AppServiceImpl implements AppService {
     
     @Autowired
     private EntityManager em;
+    
+    @Autowired
+    NamedParameterJdbcTemplate jdbcTemplate;
 
 
     /**
@@ -101,14 +107,7 @@ public class AppServiceImpl implements AppService {
 		return findAppsByCriteria(null, text, minRating);
 	}
 
-    /**
-     * 
-     * @param id
-     * @param text
-     * @param minRating
-     * @return list of apps
-     */
-	private List<App> findAppsByCriteria(Long id, String text, Integer minRating) {
+	private List<App> findAppsByCriteria_old(Long id, String text, Integer minRating) {
 		String searchStr = text != null ? "%"+ text.toLowerCase() + "%" : null;
 		String selectAppStr = "a.id, a.name, a.description, a.whats_new, a.price, a.version, a.downloads, a.last_update, a.icon_url, a.active, a.user_uuid"; 
 		String selectRatingStr = "avg(r.rating_value) as rating"; 
@@ -156,4 +155,52 @@ public class AppServiceImpl implements AppService {
 		return results;
 	}
 
+    /**
+     * Search for apps using different criteria
+     * @param id
+     * @param text
+     * @param minRating
+     * @return list of apps
+     */
+	private List<App> findAppsByCriteria(Long id, String text, Integer minRating) {
+		String searchStr = text != null ? "%"+ text.toLowerCase() + "%" : null;
+		String selectAppStr = "a.id, a._name, a.description, a.whats_new, a.price, a._version, a.downloads, a.last_update, a.icon_url, a.active, a.user_uuid"; 
+		String selectRatingStr = "avg(r.rating_value) as rating"; 
+		String fromStr = "app a"; 
+		String joinStr = " left outer join rating r on r.app_id = a.id"; 
+		String joinTextStr = " join _user u on u.uuid = a.user_uuid"; 
+		String whereStr = "";
+		String whereIdStr = "a.id = :id";
+		String whereTextStr = "(lower(a._name) like :searchStr or lower(a.description) like :searchStr or lower(a.whats_new) like :searchStr or u.user_name like :searchStr) ";
+		String havingStr = "avg(r.rating_value) >= :minRating";
+		if (id != null) {
+			whereStr += (whereStr.length() > 0) ? " and " + whereIdStr : " where " + whereIdStr;
+		}
+		if (text != null) {
+			joinStr += joinTextStr;
+			whereStr += (whereStr.length() > 0) ? " and " + whereTextStr : " where " + whereTextStr;
+		}
+		String queryStr = "select " + selectAppStr + ", " + selectRatingStr + " from " + fromStr
+				+ joinStr + whereStr + " group by " + selectAppStr;
+		if (minRating != null) {
+			queryStr += " having " + havingStr;
+		}
+		
+		logger.info("queryStr = ", queryStr);
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		if (id != null) {
+			namedParameters.addValue("id", id);
+		}    	
+		if (text != null) {
+			namedParameters.addValue("searchStr", searchStr);
+		}    	
+		if (minRating != null) {
+			namedParameters.addValue("minRating", minRating);
+		}
+
+		List<App> results = jdbcTemplate.query(queryStr, namedParameters, new AppRowMapper());
+
+		return results;
+	}
+	
 }
