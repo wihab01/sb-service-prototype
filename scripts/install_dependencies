@@ -4,12 +4,14 @@
 ##
 cd /home/ec2-user/javaapp
 mv appstore-service.war.original appstore-service.war
-# deactivate regular tomcat (re)installation
-#wget https://s3.amazonaws.com/dhqs-mirror-iad/apache-tomcat-8.0.39.tar.gz
-#mkdir /opt/tomcat
-#tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
+## Deactivate regular tomcat (re)installation if necessary
+#Tomcat 8.0.x reached end of life at 30.06.2018!
+#wget https://s3.amazonaws.com/dhqs-mirror-iad/apache-tomcat-8.0.39.tar.gz  
+wget https://s3.amazonaws.com/dhqs-mirror-iad/apache-tomcat-9.0.10.tar.gz
+mkdir /opt/tomcat
+tar xvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
 cd /opt/tomcat
-#sed -i 's|port="8080"|port="80"|g' conf/server.xml
+sed -i 's|port="8080"|port="80"|g' conf/server.xml
 rm -rf webapps/appstore-service
 #mv /home/ec2-user/javaapp/appstore-service.war.original webapps
 cp /home/ec2-user/javaapp/appstore-service.war webapps
