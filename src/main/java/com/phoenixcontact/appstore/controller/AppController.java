@@ -86,7 +86,7 @@ public class AppController {
 	        storedApp.setDescription(app.getDescription());
 	        storedApp.setIconUrl(app.getIconUrl());
 	        storedApp.setPrice(app.getPrice());
-	        storedApp.setActive(app.isActive());
+	        storedApp.setActive(app.getActive());
 	        storedApp.setVersion(app.getVersion());
 	        storedApp.setWhatsNew(app.getWhatsNew());
 	        storedApp.setDownloads(app.getDownloads());

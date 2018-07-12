@@ -59,14 +59,14 @@ public class UserController {
     		storedUser.setFirstName(user.getFirstName());
     		storedUser.setLastName(user.getLastName());
     		storedUser.setEmail(user.getEmail());
-    		storedUser.setActive(user.isActive());
+    		storedUser.setActive(user.getActive());
 	        storedUser.setCompany(user.getCompany());
-	    	storedUser.setGeneralTaCAccepted(user.isGeneralTaCAccepted());
-	    	storedUser.setDeveloperTaCAccepted(user.isDeveloperTaCAccepted());
+	    	storedUser.setGeneralTaCAccepted(user.getGeneralTaCAccepted());
+	    	storedUser.setDeveloperTaCAccepted(user.getDeveloperTaCAccepted());
 	    	storedUser.setGeneralInfo(user.getGeneralInfo());
 	    	storedUser.setCreatedAt(user.getCreatedAt());
+	    	// User name controlled by ProfiCloud IDM
 	    	//storedUser.setUserName(user.getUserName());
-	    	storedUser.setPcLoginToken(user.getPcLoginToken());
 	    	userService.saveUser(storedUser);
         }
         return new ResponseEntity<User>(storedUser, HttpStatus.OK);

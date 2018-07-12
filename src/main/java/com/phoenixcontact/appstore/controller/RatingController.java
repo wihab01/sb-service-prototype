@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phoenixcontact.appstore.domain.Rating;
-import com.phoenixcontact.appstore.domain.RatingId;
 import com.phoenixcontact.appstore.service.RatingService;
 
 import io.swagger.annotations.Api;
@@ -33,12 +32,12 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
-    @ApiOperation(value = "Search a rating by composite id",response = Iterable.class)
-    @RequestMapping(value = "/{compositeId}", method= RequestMethod.GET, produces = "application/json")
-    public ResponseEntity<?> getRating(@PathVariable RatingId compositeId, Model model){
-    	Rating storedRating = ratingService.getRatingById(compositeId);
+    @ApiOperation(value = "Search a rating by id",response = Iterable.class)
+    @RequestMapping(value = "/{id}", method= RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<?> getRating(@PathVariable Long id, Model model){
+    	Rating storedRating = ratingService.getRatingById(id);
     	if (storedRating == null) {
-    		return new ResponseEntity<String>("Rating with id = " + compositeId + " not found", HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<String>("Rating with id = " + id + " not found", HttpStatus.NOT_FOUND);
     	}
         return new ResponseEntity<Rating>(storedRating, HttpStatus.OK);
     }
@@ -82,12 +81,13 @@ public class RatingController {
 
     @ApiOperation(value = "Update a rating")
     @RequestMapping(value = "", method = RequestMethod.PUT, produces = "application/json")
-    public ResponseEntity<?> updateRating(@Valid @RequestBody Rating rating){
-        Rating storedRating = ratingService.getRatingById(rating.getRatingId());
+    public ResponseEntity<?> updateRating(@Valid @RequestBody Rating rating) {
+        Rating storedRating = ratingService.getRatingById(rating.getId());
     	if (storedRating == null) {
-    		return new ResponseEntity<String>("Rating with id=" + rating.getRatingId() + " not found", HttpStatus.NOT_FOUND);
+    		return new ResponseEntity<String>("Rating with id=" + rating.getId() + " not found", HttpStatus.NOT_FOUND);
     	} else {
-	        storedRating.setRatingValue(rating.getRatingValue());
+	        storedRating.setAppId(rating.getAppId());
+	        storedRating.setUserUuid(rating.getUserUuid());
 	        storedRating.setReview(rating.getReview());
 	        storedRating.setRatingDate(new Date());
 	        ratingService.saveRating(storedRating);

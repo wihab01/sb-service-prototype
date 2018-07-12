@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.phoenixcontact.appstore.domain.Rating;
-import com.phoenixcontact.appstore.domain.RatingId;
 import com.phoenixcontact.appstore.repository.RatingRepository;
 
 @Service
@@ -30,7 +29,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public Rating getRatingById(RatingId id) {
+    public Rating getRatingById(Long id) {
         return ratingRepository.findById(id).orElse(null);
     }
 
@@ -47,11 +46,11 @@ public class RatingServiceImpl implements RatingService {
     }
 
    @Override
-   public Iterable<Rating> findRatingsByUser(String uuid) {
+   public Iterable<Rating> findRatingsByUser(String userUuid) {
        logger.debug("findRatingsByUser called");
        String queryStr = "select r from Rating r where r.ratingId.userUuid = :uuid";
        Query sqlQuery = em.createQuery(queryStr, Rating.class);
-       sqlQuery.setParameter("uuid", uuid);
+       sqlQuery.setParameter("uuid", userUuid);
        
        @SuppressWarnings("unchecked")
        List<Rating> results = sqlQuery.getResultList();
